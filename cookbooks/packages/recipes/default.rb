@@ -3,20 +3,14 @@
 # Recipe:: default
 #
 
-node[:packages].each do |package|
-
-  ey_cloud_report "package-install" do
-    message "Installing #{package[:name]}-#{package[:version]}"
-  end
-  
+node[:v2][:packages].each do |package|
   enable_package package[:name] do
     version package[:version]
+    override_hardmask true
   end
-    
-  package package[:name] do 
+
+  package package[:name] do
     version package[:version]
-    action :install 
+    action :install
   end
-
 end
-

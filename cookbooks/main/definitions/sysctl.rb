@@ -1,8 +1,8 @@
-define :sysctl, :action => :add do
+define :sysctl, action: :add do
   case params[:action]
   when :add
     params[:variables].each do |name, value|
-      search  = "^#{Regexp.escape(name)}\\s*=.*$"
+      search = "^#{Regexp.escape(name)}\\s*=.*$"
 
       execute "remove-#{name}-in-sysctl" do
         command "sed -i '/#{search}/d' /etc/sysctl.conf"
@@ -15,8 +15,8 @@ define :sysctl, :action => :add do
       end
     end
 
-    execute "reload-sysctl" do
-      command "sysctl -p"
+    execute 'reload-sysctl' do
+      command 'sysctl -p'
     end
   end
 end

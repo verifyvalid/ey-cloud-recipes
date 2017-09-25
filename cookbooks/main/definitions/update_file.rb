@@ -1,4 +1,4 @@
-define :update_file, :action => :append do
+define :update_file, action: :append do
   # requirements
   require 'tempfile'
 
@@ -18,15 +18,14 @@ define :update_file, :action => :append do
 
   # check which action we are performing
   case params[:action].to_sym
-    
+
   # append or rewrite
   when :append, :rewrite
     # file mode
     mode = params[:action].to_sym == :append ? 'a' : 'w'
-    digest = Digest::MD5.hexdigest(params[:body])
 
     # carry out the action
-    ruby_block "#{params[:action]}-to-#{filepath} (#{digest})" do
+    ruby_block "#{params[:action]}-to-#{filepath}" do
       block do
         File.open(filepath, mode) do |f|
           f.puts params[:body]
