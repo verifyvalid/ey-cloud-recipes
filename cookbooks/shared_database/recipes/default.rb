@@ -5,6 +5,7 @@ shared_database = {
   'staging_2013' => { 'vv_support' => 'verifyvalid' },
   'training_2013' => { 'vv_support' => 'verifyvalid' },
   'training' => { 'vv_support' => 'verifyvalid' },
+  'sandbox' => { 'vv_support' => 'verifyvalid' },
   'preproduction' => { 'vv_support' => 'verifyvalid' }
 }
 
@@ -26,7 +27,7 @@ node[:engineyard][:environment][:apps].each do |app|
         database: target_database,
         username: node[:users][0][:username],
         password: node[:users][0][:password],
-        host: node[:db_host]
+        host: 'ey-db-master'
       })
     end
   end
