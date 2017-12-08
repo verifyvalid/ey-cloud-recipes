@@ -14,13 +14,13 @@ include_recipe 'wkhtmltopdf'
 include_recipe 'pdftk'
 include_recipe 'clamav'
 
+include_recipe 'cron'
+
 # Shared database config
 include_recipe 'shared_database'
 
 # Shared config including but not limited to: yodlee, quickbooks_online, and smtp settings.
 include_recipe 'app_config'
-
-include_recipe 'cron'
 
 #include_recipe 'data_gather'
 

@@ -74,6 +74,15 @@ env_bucket_name = "#{account_level_env}-echecks"
 # =================================================
 
 node[:engineyard][:environment][:apps].each do |app|
+  if ['verifyvalid', 'monitoring'].include?(app[:name].downcase)
+    execute "add_whenever_cronjobs_#{app[:name]}" do
+      user "deploy"
+      cwd "/data/#{app[:name]}/current"
+      command "bundle exec whenever --set environment=#{node[:engineyard][:environment][:framework_env]} --update-crontab #{app[:name]}_#{node[:engineyard][:environment][:framework_env]}"
+      only_if { node[:instance_role] == 'app_master' }
+    end
+  end
+
   config_files = [
     {
       shared: true,
